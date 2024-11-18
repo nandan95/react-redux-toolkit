@@ -3,11 +3,33 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import Home from './components/Home';
+import About from './components/About';
+import Contact from './components/Contact';
+import Layout from './Layout';
+import User from './components/User';
+import Github, { githubInfoLoader } from './components/Github';
 
+const route = createBrowserRouter(createRoutesFromElements(
+  <Route path='/' element={<Layout/>}>
+    <Route path='' element ={<Home/>}/>
+    <Route path='about' element ={<About/>}/>
+    <Route path='contact' element={<Contact/>}/>
+    <Route path='user/:userId' element={<User/>}/>
+    <Route 
+    loader={githubInfoLoader}
+    path='github' element={<Github/>}/>
+
+  </Route>
+))
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  
   <React.StrictMode>
+    <RouterProvider router={route}>
     <App />
+    </RouterProvider>
   </React.StrictMode>
 );
 
